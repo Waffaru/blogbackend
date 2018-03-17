@@ -13,11 +13,21 @@ public class BlogPost {
     String title;
     @Column(name = "body")
     String body;
+    @Column(name = "username")
+    String username;
     @Column(name ="date")
     Date date;
-    @Column(name ="user")
-    String user;
 
+    public BlogPost() {
+
+    }
+
+    public BlogPost(String title, String body,String user) {
+        this.title = title;
+        this.body = body;
+        this.date = new Date();
+        this.username = user;
+    }
 
     public String getTitle() {
         return title;
@@ -43,11 +53,11 @@ public class BlogPost {
         this.date = date;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String user) {
+        this.username = user;
     }
 }

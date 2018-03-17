@@ -24,12 +24,12 @@ public class MyRestController {
     }
     //curl -v http://localhost:8080/blogPost/2
     @RequestMapping(value = "/blogPost/{blogId}", method = RequestMethod.GET)
-    public Optional<BlogPost> getBlog(@PathVariable int blogId){
+    public Optional<BlogPost> getBlog(@PathVariable long blogId){
         return blogPostRepo.findById(blogId);
     }
     //curl -X DELETE http://localhost:8080/blogPost/2
     @RequestMapping(value = "/blogPost/{blogId}", method = RequestMethod.DELETE)
-    public void deleteCustomer(@PathVariable int blogId){
+    public void deleteCustomer(@PathVariable long blogId){
         blogPostRepo.deleteById(blogId);
     }
 

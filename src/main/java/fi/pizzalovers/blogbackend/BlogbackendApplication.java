@@ -6,14 +6,15 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.persistence.EntityManager;
+import java.util.Date;
 
 @SpringBootApplication
 public class BlogbackendApplication implements CommandLineRunner {
 
 	@Autowired
 	EntityManager entityManager;
-	/*@Autowired
-	MyRepo database;*/
+	@Autowired
+	MyRepo database;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogbackendApplication.class, args);
@@ -21,5 +22,7 @@ public class BlogbackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		Date date = new Date();
+		database.save(new BlogPost("Test","This is test content", "Jack"));
 	}
 }
