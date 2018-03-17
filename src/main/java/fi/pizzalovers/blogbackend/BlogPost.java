@@ -8,7 +8,7 @@ import java.util.Date;
 public class BlogPost {
     @Id
     @GeneratedValue
-    int id;
+    long id;
     @Column(name = "title")
     String title;
     @Column(name = "body")
@@ -19,6 +19,7 @@ public class BlogPost {
     Date date;
 
     public BlogPost() {
+        setDate(new Date());
 
     }
 
@@ -27,6 +28,14 @@ public class BlogPost {
         this.body = body;
         this.date = new Date();
         this.username = user;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
