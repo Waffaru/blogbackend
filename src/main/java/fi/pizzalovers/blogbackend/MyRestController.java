@@ -32,6 +32,15 @@ public class MyRestController {
     public void deleteCustomer(@PathVariable long blogId){
         blogPostRepo.deleteById(blogId);
     }
-
-
+    @RequestMapping(value = "/blogpost/{blogId}/edit", method = RequestMethod.POST)
+    public void updatePost(@PathVariable long blogId, @RequestBody BlogPost tmp) {
+        BlogPost postToUpdate = blogPostRepo.getOne(blogId);
+        if(tmp.getTitle() != null) {
+            postToUpdate.setTitle(tmp.getTitle());
+        }
+        if(tmp.getBody() != null) {
+            postToUpdate.setBody(tmp.getBody());
+        }
+        blogPostRepo.save(postToUpdate);
+    }
 }
