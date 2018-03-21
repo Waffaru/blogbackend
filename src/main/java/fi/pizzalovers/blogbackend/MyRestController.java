@@ -1,12 +1,30 @@
 package fi.pizzalovers.blogbackend;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.Optional;
 
 @RestController
 public class MyRestController {
+    @Configuration
+    public class MyConfiguration {
+
+        @Bean
+        public WebMvcConfigurer corsConfigurer() {
+            return new WebMvcConfigurerAdapter() {
+                @Override
+                public void addCorsMappings(CorsRegistry registry) {
+                    registry.addMapping("/**");
+                }
+            };
+        }
+    }
 
     @Autowired
     MyRepo blogPostRepo;
@@ -17,7 +35,7 @@ public class MyRestController {
     public synchronized void SaveBlogPost(@RequestBody BlogPost x){
         blogPostRepo.save(x);
     }
-    //curl -v http://localhost:8080/blogPost
+    //curl -v http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.GET)
     public Iterable<BlogPost> get(){
         return blogPostRepo.findAll();
