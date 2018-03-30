@@ -20,7 +20,7 @@ public class MyRestController {
             return new WebMvcConfigurerAdapter() {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
-                    registry.addMapping("/**");
+                    registry.addMapping("/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
                 }
             };
         }
@@ -28,8 +28,9 @@ public class MyRestController {
 
     @Autowired
     MyRepo blogPostRepo;
+    @Autowired
+    MyRepo usersRepo;
 
-    // TODO muokkaa valuet kun tiedetään mitä tarvitaan
     //curl -v -H "Content-type: application/json" -X POST -d "{}" http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.POST)
     public synchronized void SaveBlogPost(@RequestBody BlogPost x){
@@ -61,4 +62,5 @@ public class MyRestController {
         }
         blogPostRepo.save(postToUpdate);
     }
+
 }
