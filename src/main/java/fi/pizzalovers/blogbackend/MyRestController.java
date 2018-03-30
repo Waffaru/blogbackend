@@ -31,21 +31,26 @@ public class MyRestController {
     @Autowired
     MyRepoUser usersRepo;
 
+    //TODO fix that you cant create empty users or blogposts
+
     //curl -v -H "Content-type: application/json" -X POST -d "{}" http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.POST)
     public synchronized void SaveBlogPost(@RequestBody BlogPost x){
         blogPostRepo.save(x);
     }
+
     //curl -v http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.GET)
     public Iterable<BlogPost> getBlog(){
         return blogPostRepo.findAll();
     }
+
     //curl -v http://localhost:8080/blogPost/2
     @RequestMapping(value = "/blogpost/{blogId}", method = RequestMethod.GET)
     public Optional<BlogPost> getBlog(@PathVariable long blogId){
         return blogPostRepo.findById(blogId);
     }
+
     //curl -X DELETE http://localhost:8080/blogpost/2
     @RequestMapping(value = "/blogpost/{blogId}", method = RequestMethod.DELETE)
     public void deleteCustomer(@PathVariable long blogId){
@@ -63,15 +68,19 @@ public class MyRestController {
         blogPostRepo.save(postToUpdate);
     }
 
+    //curl -v -H "Content-type: application/json" -X POST -d "{\"username\": \"teukkaa\",\"password\": \"kolmonen\"}" http://localhost:8080/user
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public synchronized void SaveUser(@RequestBody User x){
         usersRepo.save(x);
     }
-    //curl -v http://localhost:8080/blogpost
+
+    //curl -v http://localhost:8080/user
     @RequestMapping(value = "/user", method = RequestMethod.GET)
-    public Iterable<User> getUser(){
+    public Iterable<User> getUsers(){
         return usersRepo.findAll();
     }
+
+    //curl -v http://localhost:8080/user/2
     @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
     public Optional<User> getUser(@PathVariable long userId){
         return usersRepo.findById(userId);

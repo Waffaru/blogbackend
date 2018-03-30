@@ -25,6 +25,5 @@ public class BlogbackendApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		blogDatabase.save(new BlogPost("Test","This is test content", "Jack"));
-		userDatabase.save(new User("teukka1","kolme1"));
 	}
 }
