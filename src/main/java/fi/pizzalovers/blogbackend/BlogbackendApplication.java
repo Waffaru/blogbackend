@@ -14,7 +14,9 @@ public class BlogbackendApplication implements CommandLineRunner {
 	@Autowired
 	EntityManager entityManager;
 	@Autowired
-	MyRepo database;
+	MyRepoBlogPost blogDatabase;
+    @Autowired
+    MyRepoUser userDatabase;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogbackendApplication.class, args);
@@ -22,7 +24,7 @@ public class BlogbackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		database.save(new BlogPost("Test","This is test content", "Jack"));
-		User testi = new User("teukka","kolme");
+		blogDatabase.save(new BlogPost("Test","This is test content", "Jack"));
+		userDatabase.save(new User("teukka1","kolme1"));
 	}
 }

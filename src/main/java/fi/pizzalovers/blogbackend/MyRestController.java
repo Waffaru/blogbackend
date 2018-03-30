@@ -27,9 +27,9 @@ public class MyRestController {
     }
 
     @Autowired
-    MyRepo blogPostRepo;
+    MyRepoBlogPost blogPostRepo;
     @Autowired
-    MyRepo usersRepo;
+    MyRepoUser usersRepo;
 
     //curl -v -H "Content-type: application/json" -X POST -d "{}" http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.POST)
@@ -38,7 +38,7 @@ public class MyRestController {
     }
     //curl -v http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.GET)
-    public Iterable<BlogPost> get(){
+    public Iterable<BlogPost> getBlog(){
         return blogPostRepo.findAll();
     }
     //curl -v http://localhost:8080/blogPost/2
@@ -61,6 +61,20 @@ public class MyRestController {
             postToUpdate.setBody(tmp.getBody());
         }
         blogPostRepo.save(postToUpdate);
+    }
+
+    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    public synchronized void SaveUser(@RequestBody User x){
+        usersRepo.save(x);
+    }
+    //curl -v http://localhost:8080/blogpost
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public Iterable<User> getUser(){
+        return usersRepo.findAll();
+    }
+    @RequestMapping(value = "/user/{userId}", method = RequestMethod.GET)
+    public Optional<User> getUser(@PathVariable long userId){
+        return usersRepo.findById(userId);
     }
 
 }

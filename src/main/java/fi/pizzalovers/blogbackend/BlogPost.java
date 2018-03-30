@@ -1,5 +1,7 @@
 package fi.pizzalovers.blogbackend;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -17,6 +19,7 @@ public class BlogPost {
     String username;
     @Column(name ="date")
     Date date;
+
 
     public BlogPost() {
         setDate(new Date());

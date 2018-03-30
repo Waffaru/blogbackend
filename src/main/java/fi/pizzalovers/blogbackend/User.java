@@ -45,9 +45,6 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
     public void setPassword(String password) throws NoSuchProviderException, NoSuchAlgorithmException {
         this.password = getSecurePassword(password,saltIt());
