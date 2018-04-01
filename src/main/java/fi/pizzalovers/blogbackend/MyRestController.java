@@ -30,13 +30,17 @@ public class MyRestController {
     MyRepoBlogPost blogPostRepo;
     @Autowired
     MyRepoUser usersRepo;
+    @Autowired
+    MyRepoComment commentRepo;
 
     //TODO fix that you cant create empty users or blogposts
 
     //curl -v -H "Content-type: application/json" -X POST -d "{}" http://localhost:8080/blogpost
     @RequestMapping(value = "/blogpost", method = RequestMethod.POST)
     public synchronized void SaveBlogPost(@RequestBody BlogPost x){
-        blogPostRepo.save(x);
+        if(x.getBody() != null){
+            blogPostRepo.save(x);
+        }
     }
 
     //curl -v http://localhost:8080/blogpost
@@ -56,6 +60,7 @@ public class MyRestController {
     public void deleteCustomer(@PathVariable long blogId){
         blogPostRepo.deleteById(blogId);
     }
+
     @RequestMapping(value = "/blogpost/{blogId}/edit", method = RequestMethod.POST)
     public void updatePost(@PathVariable long blogId, @RequestBody BlogPost tmp) {
         BlogPost postToUpdate = blogPostRepo.getOne(blogId);
@@ -71,7 +76,11 @@ public class MyRestController {
     //curl -v -H "Content-type: application/json" -X POST -d "{\"username\": \"teukkaa\",\"password\": \"kolmonen\"}" http://localhost:8080/user
     @RequestMapping(value = "/user", method = RequestMethod.POST)
     public synchronized void SaveUser(@RequestBody User x){
-        usersRepo.save(x);
+        if(x.getUsername() == null || x.password == null){
+
+        }else{
+            usersRepo.save(x);
+        }
     }
 
     //curl -v http://localhost:8080/user
@@ -85,5 +94,32 @@ public class MyRestController {
     public Optional<User> getUser(@PathVariable long userId){
         return usersRepo.findById(userId);
     }
+
+    //curl -v -H "Content-type: application/json" -X POST -d "{\"username\": \"teukkaa\",\"password\": \"kolmonen\"}" http://localhost:8080/user
+    @RequestMapping(value = "/comment", method = RequestMethod.POST)
+    public synchronized void saveComment(@RequestBody Comment x){
+        commentRepo.save(x);
+    }
+
+    //curl -v http://localhost:8080/user
+    @RequestMapping(value = "/comment", method = RequestMethod.GET)
+    public Iterable<Comment> getComments(){
+        return commentRepo.findAll();
+    }
+
+    //curl -v http://localhost:8080/user/2
+    @RequestMapping(value = "/comment/{commentId}", method = RequestMethod.GET)
+    public Optional<Comment> getComment(@PathVariable long commentId){
+        return commentRepo.findById(commentId);
+    }
+    //curl -v http://localhost:8080/comment/3/dislike
+    @RequestMapping(value = "/comment/{commentId}/dislike", method = RequestMethod.GET)
+    public void setdislike(@PathVariable long commentId){
+
+        Comment temp = commentRepo.getOne(commentId);
+        temp.setDislikes(temp.getDislikes() + 1l);
+        commentRepo.save(temp);
+    }
+
 
 }

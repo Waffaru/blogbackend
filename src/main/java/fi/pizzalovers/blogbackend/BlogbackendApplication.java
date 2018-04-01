@@ -6,7 +6,6 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.persistence.EntityManager;
-import java.util.Date;
 
 @SpringBootApplication
 public class BlogbackendApplication implements CommandLineRunner {
@@ -17,6 +16,8 @@ public class BlogbackendApplication implements CommandLineRunner {
 	MyRepoBlogPost blogDatabase;
     @Autowired
     MyRepoUser userDatabase;
+    @Autowired
+    MyRepoComment commentDatabase;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BlogbackendApplication.class, args);
@@ -25,5 +26,16 @@ public class BlogbackendApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		blogDatabase.save(new BlogPost("Test","This is test content", "Jack"));
+		User ryhis = new User("Ryhis","Salasana");
+		ryhis.adminRights = true;
+		userDatabase.save(ryhis);
+		commentDatabase.save(new Comment("Kusipäät","Ryhis",2l));
+        commentDatabase.save(new Comment("kaikki on kivaa","Ryhis",2l));
+        commentDatabase.save(new Comment("pinky & brain","Ryhis",2l));
+        commentDatabase.save(new Comment("kummeli on paras","Ryhis",2l));
+        commentDatabase.save(new Comment("Eka???!?","Ryhis",2l));
+        commentDatabase.save(new Comment("Gonza","Ryhis",2l));
+        commentDatabase.save(new Comment("Juhannus on kesällä?","Ryhis",2l));
+
 	}
 }
