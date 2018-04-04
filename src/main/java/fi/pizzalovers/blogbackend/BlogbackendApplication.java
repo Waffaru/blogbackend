@@ -25,7 +25,7 @@ public class BlogbackendApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-		blogDatabase.save(new BlogPost("Test","This is test content", "Jack"));
+		blogDatabase.save(new BlogPost("CSS on helppoa ja kivaa","Kannattaa opiskella, saa hienoja värejä aikaan", "Jack"));
 		User ryhis = new User("Ryhis","salasana");
 		ryhis.adminRights = true;
         System.out.println(ryhis.password);
@@ -33,14 +33,12 @@ public class BlogbackendApplication implements CommandLineRunner {
 		User gonza = new User("Gonza","salasana");
 		gonza.adminRights = true;
 		userDatabase.save(gonza);
-		commentDatabase.save(new Comment("moi1","testi1",12l));
-        commentDatabase.save(new Comment("moi2","testi2",12l));
-        commentDatabase.save(new Comment("moi3","testi3",13l));
-        commentDatabase.save(new Comment("moi4","testi4",13l));
-        commentDatabase.save(new Comment("moi5","testi5",12l));
-        commentDatabase.save(new Comment("moi6","testi6",15l));
-        commentDatabase.save(new Comment("moi7","testi7",15l));
-        commentDatabase.save(new Comment("moi8","testi8",15l));
+		commentDatabase.save(new Comment("Tää on ihan paras!","Mikko",1l));
+        commentDatabase.save(new Comment("En tue maailmankatsomustasi","Maija",1l));
+        commentDatabase.save(new Comment("@2 elä itke","Tuija",1l));
+        commentDatabase.save(new Comment("EKA!","Paavo",1l));
+        commentDatabase.save(new Comment("Paljo viive?","Taneli",1l));
+
 
 
 	}
