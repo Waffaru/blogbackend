@@ -1,5 +1,6 @@
 package fi.pizzalovers.blogbackend;
 
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import javax.persistence.*;
 import java.security.MessageDigest;
@@ -45,9 +46,9 @@ public class User {
         this.username = username;
     }
 
-
     public void setPassword(String password) throws NoSuchProviderException, NoSuchAlgorithmException {
-        this.password = getSecurePassword(password,saltIt());
+        this.password = password;
+        //this.password = getSecurePassword(password,saltIt());
     }
     private String getSecurePassword(String passwordToHash, byte[] salt)
     {
@@ -81,5 +82,16 @@ public class User {
         byte[] salt = new byte[16];
         tmp.nextBytes(salt);
         return salt;
+    }
+    public boolean logIn(String username,String password) throws Base64DecodingException {
+        System.out.println(password);
+            if(username.equals(this.username)){
+                String userPassword = password;
+                String []tmp = userPassword.split("\\$");
+                String tmpPassword = getSecurePassword(password,Base64.decode(tmp[1]));
+                System.out.println(tmpPassword);
+                return tmpPassword.equals(password);
+            }
+        return false;
     }
 }

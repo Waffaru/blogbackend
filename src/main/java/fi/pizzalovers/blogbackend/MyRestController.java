@@ -1,5 +1,6 @@
 package fi.pizzalovers.blogbackend;
 
+import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,6 +9,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -32,7 +35,8 @@ public class MyRestController {
     MyRepoUser usersRepo;
     @Autowired
     MyRepoComment commentRepo;
-
+    @Autowired
+    MyRepoLogin loginRepo;
     //TODO fix that you cant create empty users or blogposts
 
     //curl -v -H "Content-type: application/json" -X POST -d "{}" http://localhost:8080/blogpost
@@ -119,6 +123,16 @@ public class MyRestController {
         Comment temp = commentRepo.getOne(commentId);
         temp.setDislikes(temp.getDislikes() + 1l);
         commentRepo.save(temp);
+    }
+
+    //curl -v http://localhost:8080/user
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public synchronized boolean login(@RequestBody User x) {
+        if(x.username.equals("Ryhis")&&x.password.equals("salasana") || x.username.equals("Gonza")&&x.password.equals("salasana") ){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 
