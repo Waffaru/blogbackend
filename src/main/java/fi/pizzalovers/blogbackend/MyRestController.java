@@ -113,8 +113,19 @@ public class MyRestController {
 
     //curl -v http://localhost:8080/user/2
     @RequestMapping(value = "/comment/{commentId}", method = RequestMethod.GET)
-    public Optional<Comment> getComment(@PathVariable long commentId){
+    public Optional<Comment> getCommentByCommentId(@PathVariable long commentId){
         return commentRepo.findById(commentId);
+    }
+    @RequestMapping(value = "/comment/byPostId/{postId}", method = RequestMethod.POST)
+    public List<Comment> getCommentByPostId(@PathVariable long postId, @RequestBody Comment tmp){
+        tmp.getBlogpostId();
+        List<Comment> e = new ArrayList<>();
+        for(Comment x :commentRepo.findAll()){
+            if(x.getBlogpostId() == postId){
+                e.add(x);
+            }
+        }
+        return e;
     }
     //curl -v http://localhost:8080/comment/3/dislike
     @RequestMapping(value = "/comment/{commentId}/dislike", method = RequestMethod.GET)
