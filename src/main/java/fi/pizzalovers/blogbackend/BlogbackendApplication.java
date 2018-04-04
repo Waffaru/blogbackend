@@ -29,7 +29,10 @@ public class BlogbackendApplication implements CommandLineRunner {
 		User ryhis = new User("Ryhis","Salasana");
 		ryhis.adminRights = true;
 		userDatabase.save(ryhis);
-		commentDatabase.save(new Comment("Kusipäät","Ryhis",2l));
+		User gonza = new User("Gonza","Salasana");
+		gonza.adminRights = true;
+		userDatabase.save(gonza);
+		commentDatabase.save(new Comment("Hei kaikki","Ryhis",2l));
         commentDatabase.save(new Comment("kaikki on kivaa","Ryhis",2l));
         commentDatabase.save(new Comment("pinky & brain","Ryhis",2l));
         commentDatabase.save(new Comment("kummeli on paras","Ryhis",2l));
