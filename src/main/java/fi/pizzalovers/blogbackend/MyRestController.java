@@ -116,9 +116,8 @@ public class MyRestController {
     public Optional<Comment> getCommentByCommentId(@PathVariable long commentId){
         return commentRepo.findById(commentId);
     }
-    @RequestMapping(value = "/comment/byPostId/{postId}", method = RequestMethod.POST)
-    public List<Comment> getCommentByPostId(@PathVariable long postId, @RequestBody Comment tmp){
-        tmp.getBlogpostId();
+    @RequestMapping(value = "/comment/byPostId/{postId}", method = RequestMethod.GET)
+    public List<Comment> getCommentByPostId(@PathVariable long postId){
         List<Comment> e = new ArrayList<>();
         for(Comment x :commentRepo.findAll()){
             if(x.getBlogpostId() == postId){
