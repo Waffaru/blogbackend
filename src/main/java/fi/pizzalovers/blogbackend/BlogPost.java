@@ -13,7 +13,7 @@ public class BlogPost {
     long id;
     @Column(name = "title")
     String title;
-    @Column(name = "body")
+    @Column(name = "body",columnDefinition="CLOB")
     String body;
     @Column(name = "username")
     String username;
