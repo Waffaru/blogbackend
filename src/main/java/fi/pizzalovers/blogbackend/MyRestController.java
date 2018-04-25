@@ -99,7 +99,7 @@ public class MyRestController {
         return usersRepo.findById(userId);
     }
 
-    //curl -v -H "Content-type: application/json" -X POST -d "{\"username\": \"teukkaa\",\"password\": \"kolmonen\"}" http://localhost:8080/user
+    //curl -v -H "Content-type: application/json" -X POST -d "{\"body\": \"PERKELE EI TOIMI\",\"username\": \"Teukka\",\"blogPostId\": \"6\"}" http://localhost:8080/comment
     @RequestMapping(value = "/comment", method = RequestMethod.POST)
     public synchronized void saveComment(@RequestBody Comment x){
         commentRepo.save(x);
@@ -120,7 +120,7 @@ public class MyRestController {
     public List<Comment> getCommentByPostId(@PathVariable long postId){
         List<Comment> e = new ArrayList<>();
         for(Comment x :commentRepo.findAll()){
-            if(x.getBlogpostId() == postId){
+            if(x.getBlogPostId() == postId){
                 e.add(x);
             }
         }

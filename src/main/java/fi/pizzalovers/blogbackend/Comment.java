@@ -14,15 +14,15 @@ public class Comment {
     String username;
     @Column(name = "date")
     Date date;
-    @Column(name = "blogpostId")
-    long blogpostId;
+    @Column(name = "blogPostId")
+    Long blogPostId;
     @Column(name = "dislikes")
     long dislikes;
 
-    public Comment(String body, String username, Long blogpostId) {
+    public Comment(String body, String username, Long blogPostId) {
         setBody(body);
         setUsername(username);
-        setBlogpostId(blogpostId);
+        setBlogPostId(blogPostId);
         this.date = new Date();
         this.dislikes = 0;
     }
@@ -68,12 +68,12 @@ public class Comment {
         this.date = date;
     }
 
-    public Long getBlogpostId() {
-        return blogpostId;
+    public Long getBlogPostId() {
+        return blogPostId;
     }
 
-    public void setBlogpostId(Long blogpostId) {
-        this.blogpostId = blogpostId;
+    public void setBlogPostId(Long blogPostId) {
+        this.blogPostId = blogPostId;
     }
     public long getDislikes() {
         return dislikes;
