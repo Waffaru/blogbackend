@@ -142,7 +142,10 @@ public class MyRestController {
     public synchronized ResponseEntity<?> login(@RequestBody String x) throws Base64DecodingException {
 
         for(User user : usersRepo.findAll()){
-            if(user.logIn(x)){
+            System.out.println("Value from frontend: " + x);
+            System.out.println("Value from  backend: " + user.password);
+            System.out.println("---------------------");
+            if(user.logIn(x.replace("\"", ""))){
                 return new ResponseEntity<>(null, HttpStatus.OK);
             }
         }

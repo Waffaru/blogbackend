@@ -13,7 +13,7 @@ import java.security.SecureRandom;
 @Table(name = "users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     long id;
     @Column(name = "username")
     String username;
