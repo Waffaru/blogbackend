@@ -107,6 +107,11 @@ public class MyRestController {
         commentRepo.save(x);
     }
 
+    @RequestMapping(value = "/comment/{blogId}", method = RequestMethod.DELETE)
+    public void deleteComment(@PathVariable long blogId){
+        commentRepo.deleteById(blogId);
+    }
+
     //curl -v http://localhost:8080/user
     @RequestMapping(value = "/comment", method = RequestMethod.GET)
     public Iterable<Comment> getComments(){
