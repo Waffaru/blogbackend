@@ -4,6 +4,8 @@ import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingExcepti
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -137,12 +139,14 @@ public class MyRestController {
 
     //curl -v http://localhost:8080/user
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public synchronized boolean login(@RequestBody User x) {
-        if(x.username.equals("Ryhis")&&x.password.equals("salasana") || x.username.equals("Gonza")&&x.password.equals("salasana") ){
-            return true;
-        }else{
-            return false;
+    public synchronized ResponseEntity<?> login(@RequestBody String x) throws Base64DecodingException {
+
+        for(User user : usersRepo.findAll()){
+            if(user.logIn(x)){
+                return new ResponseEntity<>(null, HttpStatus.OK);
+            }
         }
+        return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
     }
 
 

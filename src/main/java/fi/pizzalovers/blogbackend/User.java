@@ -3,6 +3,7 @@ package fi.pizzalovers.blogbackend;
 import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 import javax.persistence.*;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -47,50 +48,21 @@ public class User {
     }
 
     public void setPassword(String password) throws NoSuchProviderException, NoSuchAlgorithmException {
-        this.password = password;
-        //this.password = getSecurePassword(password,saltIt());
+        //this.password = password;
+        this.password = getSecurePassword(password);
     }
-    private String getSecurePassword(String passwordToHash, byte[] salt)
+    private String getSecurePassword(String passwordToHash)
     {
-        String generatedPassword = null;
-        try {
-            // Create MessageDigest instance for MD5
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            //Add password bytes to digest
-            md.update(salt);
-            //Get the hash's bytes
-            byte[] bytes = md.digest(passwordToHash.getBytes());
-            //This bytes[] has bytes in decimal format;
-            //Convert it to hexadecimal format
-            StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++)
-            {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            //Get complete hashed password in hex format
-            String tmp = Base64.encode(salt);
-            generatedPassword = sb.toString() + "$" + tmp;
-        }
-        catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        return generatedPassword;
+        String generatedPassword = this.username + ":" + passwordToHash;
+        String encoded = Base64.encode(generatedPassword.getBytes());
+        System.out.println(encoded);
+        return encoded;
     }
 
-    private byte[] saltIt() throws NoSuchAlgorithmException, NoSuchProviderException {
-        SecureRandom tmp = SecureRandom.getInstance("SHA1PRNG","SUN");
-        byte[] salt = new byte[16];
-        tmp.nextBytes(salt);
-        return salt;
-    }
-    public boolean logIn(String username,String password) throws Base64DecodingException {
-        System.out.println(password);
-            if(username.equals(this.username)){
-                String userPassword = password;
-                String []tmp = userPassword.split("\\$");
-                String tmpPassword = getSecurePassword(password,Base64.decode(tmp[1]));
-                System.out.println(tmpPassword);
-                return tmpPassword.equals(password);
+    public boolean logIn(String loginInfo) throws Base64DecodingException {
+
+            if(password.equals(loginInfo)){
+                return true;
             }
         return false;
     }
