@@ -57,8 +57,8 @@ public class MyRestController {
 
     //curl -v http://localhost:8080/blogPost/2
     @RequestMapping(value = "/blogpost/{blogId}", method = RequestMethod.GET)
-    public Optional<BlogPost> getBlog(@PathVariable long blogId){
-        return blogPostRepo.findById(blogId);
+    public Optional<BlogPost> getBlog(@PathVariable String blogId){
+        return blogPostRepo.findById(Long.parseLong(blogId));
     }
 
     //curl -X DELETE http://localhost:8080/blogpost/2

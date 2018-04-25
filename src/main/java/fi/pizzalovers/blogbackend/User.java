@@ -10,7 +10,7 @@ import java.security.NoSuchProviderException;
 import java.security.SecureRandom;
 
 @Entity
-@Table(name = "users")
+@Table(name = "userna")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
